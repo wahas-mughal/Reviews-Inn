@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, Alert } from "react-native";
 import {
   Content,
   Textarea,
@@ -73,22 +73,54 @@ const PostReview = (props) => {
     GooglePhoto,
     CurrentTimestamp
   ) => {
-    setIsLoading(true);
-    await dispatch(
-      InAppReviewActions.addReview(
-        User,
-        PlaceId,
-        ProfilePhoto,
-        Name,
-        Review,
-        Rating,
-        GoogleRatings,
-        GoogleTotalRatings,
-        GooglePhoto,
-        CurrentTimestamp
-      )
-    );
-    props.navigation.goBack();
+    try {
+      if (review === null) {
+        Alert.alert(
+          "No review entered!",
+          "Please enter your review to continue.",
+          [{ text: "Okay" }]
+        );
+        setIsLoading(false);
+        return;
+      }
+
+      if (
+        point1 == false &&
+        point2 == false &&
+        point3 == false &&
+        point4 == false &&
+        point5 == false
+      ) {
+        Alert.alert(
+          "No rating has been selected!",
+          "Please give a rating to continue.",
+          [{ text: "Okay" }]
+        );
+        setIsLoading(false);
+        return;
+      }
+
+      setIsLoading(true);
+
+      await dispatch(
+        InAppReviewActions.addReview(
+          User,
+          PlaceId,
+          ProfilePhoto,
+          Name,
+          Review,
+          Rating,
+          GoogleRatings,
+          GoogleTotalRatings,
+          GooglePhoto,
+          CurrentTimestamp
+        )
+      );
+      props.navigation.goBack();
+    } catch (err) {
+      throw err;
+    }
+
     setIsLoading(false);
   };
 

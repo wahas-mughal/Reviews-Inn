@@ -112,7 +112,7 @@ export const addReview = (
       const userId = getState().auth.uId;
       console.log(authToken);
       console.log(userId);
-      // map the reviews to the logged in token: logged in user and insert in firebase along the pushtoken
+      // map the reviews to the logged in token: logged in user and insert in firebase
       const response = await fetch(
         `https://restaurant-review-app-edad8-default-rtdb.firebaseio.com/InAppReviews.json?auth=${authToken}`,
         {
@@ -138,7 +138,6 @@ export const addReview = (
 
       const resData = await response.json();
       console.log(resData);
-
     } catch (err) {
       throw err;
     }

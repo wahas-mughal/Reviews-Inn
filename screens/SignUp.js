@@ -30,8 +30,8 @@ const SignUp = (props) => {
   const db = firebase.firestore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [ImageUrl, setImageUrl] = useState(null);
   const dispatch = useDispatch();
@@ -44,6 +44,26 @@ const SignUp = (props) => {
         Alert.alert(
           "Profile photo is required!",
           "Please also upload a profile photo to continue.",
+          [{ text: "Okay" }]
+        );
+        setIsLoading(false);
+        return;
+      }
+
+      if (firstName === null) {
+        Alert.alert(
+          "Firstname is required!",
+          "Please enter your firstname to continue.",
+          [{ text: "Okay" }]
+        );
+        setIsLoading(false);
+        return;
+      }
+
+      if (lastName === null) {
+        Alert.alert(
+          "Lastname is required!",
+          "Please enter your lastname to continue.",
           [{ text: "Okay" }]
         );
         setIsLoading(false);
